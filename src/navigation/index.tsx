@@ -14,7 +14,7 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import TabOneScreen from '../screens/TabOneScreen';
+import MainMenuScreen from '../screens/MainMenuScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import SessionTrackingScreen from "../screens/SessionTrackingScreen";
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../../types';
@@ -60,15 +60,15 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="MainMenu"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
+        name="MainMenu"
+        component={MainMenuScreen}
+        options={({ navigation }: RootTabScreenProps<'MainMenu'>) => ({
+          title: 'Main Menu',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable
