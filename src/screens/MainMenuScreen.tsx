@@ -9,15 +9,22 @@ export default function MainMenuScreen({ navigation }: RootTabScreenProps<'MainM
   const colorScheme = useColorScheme();
 
   const sessionButtonColor = colorScheme === 'light' ? styles.sessionButtonLight : styles.sessionButtonDark;
+  const historyButtonColor = colorScheme === 'light' ? styles.historyButtonLight : styles.historyButtonDark;
+  const paletteButtonColor = colorScheme === 'light' ? styles.paletteButtonLight : styles.paletteButtonDark;
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('SessionTracking')} style={[sessionButtonColor, styles.sessionButton]}>
+      <TouchableOpacity onPress={() => navigation.navigate('SessionTracking')} style={[styles.menuOption, styles.sessionButton, sessionButtonColor]}>
         <Text style={styles.title}>Start Session</Text>
       </TouchableOpacity>
 
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabOneScreen.tsx" />
+      <TouchableOpacity onPress={() => navigation.navigate('HistoryView')} style={[styles.menuOption, styles.historyButton, historyButtonColor]}>
+        <Text style={styles.title}>Session History</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => console.log("navigate to palette")} style={[styles.menuOption, styles.paletteButton, paletteButtonColor]}>
+        <Text style={styles.title}>Event Palette</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -26,24 +33,48 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
   },
-  sessionButton: {
-    width: "90%",
-    height: '50%',
+  menuOption: {
+    width: '90%',
     opacity: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 10,
     borderStyle: 'solid',
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 8,
+    elevation: 5
+  },
+  sessionButton: {
+    height: '50%',
   },
   sessionButtonLight: {
     backgroundColor: colors.light.tint,
     borderColor: 'black',
   },
   sessionButtonDark: {
+    backgroundColor: colors.dark.tint,
+    borderColor: 'white',
+  },
+  historyButton: {
+    height: '20%',
+  },
+  historyButtonLight: {
+    backgroundColor: colors.light.tint,
+    borderColor: 'black',
+  },
+  historyButtonDark: {
+    backgroundColor: colors.dark.tint,
+    borderColor: 'white',
+  },
+  paletteButton: {
+    height: '20%',
+  },
+  paletteButtonLight: {
+    backgroundColor: colors.light.tint,
+    borderColor: 'black',
+  },
+  paletteButtonDark: {
     backgroundColor: colors.dark.tint,
     borderColor: 'white',
   },

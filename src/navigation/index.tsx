@@ -17,6 +17,7 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import MainMenuScreen from '../screens/MainMenuScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import SessionTrackingScreen from "../screens/SessionTrackingScreen";
+import HistoryViewScreen from "../screens/HistoryViewScreen";
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -42,6 +43,7 @@ function RootNavigator() {
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Screen name="SessionTracking" component={SessionTrackingScreen} options={{title: "Session Tracking"}} />
+      <Stack.Screen name="HistoryView" component={HistoryViewScreen} options={{title: "History"}} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
@@ -68,7 +70,7 @@ function BottomTabNavigator() {
         name="MainMenu"
         component={MainMenuScreen}
         options={({ navigation }: RootTabScreenProps<'MainMenu'>) => ({
-          title: 'Main Menu',
+          title: 'QuickABA',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable
