@@ -21,7 +21,7 @@ export default function SessionTrackingScreen({navigation}: RootStackScreenProps
 
             {/*Display events*/}
             {events.map((item, key)=>(
-                <SessionEventListItem event={item}/>
+                <SessionEventListItem key={key} event={item}/>
             ))}
 
             <TouchableOpacity
