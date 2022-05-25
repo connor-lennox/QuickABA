@@ -18,6 +18,7 @@ import MainMenuScreen from '../screens/MainMenuScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import SessionTrackingScreen from "../screens/SessionTrackingScreen";
 import HistoryViewScreen from "../screens/HistoryViewScreen";
+import EditSessionEventScreen from "../screens/EditSessionEventScreen";
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -44,6 +45,7 @@ function RootNavigator() {
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Screen name="SessionTracking" component={SessionTrackingScreen} options={{title: "Session Tracking"}} />
       <Stack.Screen name="HistoryView" component={HistoryViewScreen} options={{title: "History"}} />
+      <Stack.Screen name="EventEdit" component={EditSessionEventScreen} options={{title: "Edit Event"}} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>

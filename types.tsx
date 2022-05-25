@@ -6,6 +6,7 @@
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import {EditSessionEventScreenProps} from "./src/screens/EditSessionEventScreen";
 
 declare global {
   namespace ReactNavigation {
@@ -17,6 +18,7 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   SessionTracking: undefined;
   HistoryView: undefined,
+  EventEdit: EditSessionEventScreenProps,
   Modal: undefined;
   NotFound: undefined;
 };

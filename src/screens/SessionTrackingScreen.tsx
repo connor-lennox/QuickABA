@@ -2,9 +2,15 @@ import {RootStackScreenProps} from "../../types";
 import {Text, View} from "../components/Themed";
 import {StyleSheet, TouchableOpacity} from "react-native";
 import colors from "../constants/Colors";
-import {useState} from "react";
+import React, {useState} from "react";
 import {SessionEvent} from "../model/TrackedSession";
 import {SessionEventListItem} from "../components/SessionEventListItem";
+
+// Create a hook to force updates on functional components
+function useForceUpdate() {
+    const [value, setValue] = useState(0);
+    return () => setValue(value => value + 1);
+}
 
 export default function SessionTrackingScreen({navigation}: RootStackScreenProps<'SessionTracking'>) {
     const [events, setEvents] = useState(new Array<SessionEvent>());
@@ -12,6 +18,14 @@ export default function SessionTrackingScreen({navigation}: RootStackScreenProps
     const onAddEventClick = () => {
         setEvents(arr => [...arr, new SessionEvent(`test event` + events.length)])
     };
+
+    // Update screen when we regain focus to update event titles
+    const forceUpdate = useForceUpdate();
+    React.useEffect(() => {
+        return navigation.addListener('focus', () => {
+            forceUpdate();
+        });
+    }, [navigation])
 
     return (
         <View style={styles.container}>
