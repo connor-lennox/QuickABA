@@ -4,6 +4,7 @@ import {StyleSheet, TouchableOpacity} from "react-native";
 import colors from "../constants/Colors";
 import {useState} from "react";
 import {SessionEvent} from "../model/TrackedSession";
+import {SessionEventListItem} from "../components/SessionEventListItem";
 
 export default function SessionTrackingScreen({navigation}: RootStackScreenProps<'SessionTracking'>) {
     const [events, setEvents] = useState(new Array<SessionEvent>());
@@ -20,7 +21,7 @@ export default function SessionTrackingScreen({navigation}: RootStackScreenProps
 
             {/*Display events*/}
             {events.map((item, key)=>(
-                <Text key={key}>{item.title}</Text>
+                <SessionEventListItem event={item}/>
             ))}
 
             <TouchableOpacity
