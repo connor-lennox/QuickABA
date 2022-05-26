@@ -23,10 +23,12 @@ export default function EditSessionEventScreen({route, navigation}: RootStackScr
             <Text style={styles.title}>Edit Event</Text>
             <TextInput
                 onChangeText={updateEventTitle}
-                defaultValue={event.title}/>
+                defaultValue={event.title}
+                placeholder={"Title"}/>
             <TextInput
                 onChangeText={updateEventNotes}
-                defaultValue={event.notes}/>
+                defaultValue={event.notes}
+                placeholder={"Notes"}/>
         </View>
     )
 }

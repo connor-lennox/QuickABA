@@ -4,7 +4,6 @@ import {Text} from "./Themed"
 import {useNavigation} from "@react-navigation/native";
 
 interface SessionEventListItemProps {
-    key: number,
     event: SessionEvent;
 }
 
@@ -13,7 +12,6 @@ export function SessionEventListItem(props: SessionEventListItemProps) {
 
     const openSessionEventEditor = (sessionEvent: SessionEvent) => {
         navigation.navigate('EventEdit', {event: sessionEvent});
-        console.log("editing event '" + sessionEvent.title + "'");
     }
 
     return (

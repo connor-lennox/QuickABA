@@ -1,6 +1,6 @@
 import {RootStackScreenProps} from "../../types";
 import {Text, View} from "../components/Themed";
-import {StyleSheet, TouchableOpacity} from "react-native";
+import {FlatList, SafeAreaView, StyleSheet, TouchableOpacity} from "react-native";
 import colors from "../constants/Colors";
 import React, {useState} from "react";
 import {SessionEvent} from "../model/TrackedSession";
@@ -16,7 +16,11 @@ export default function SessionTrackingScreen({navigation}: RootStackScreenProps
     const [events, setEvents] = useState(new Array<SessionEvent>());
 
     const onAddEventClick = () => {
-        setEvents(arr => [...arr, new SessionEvent(`test event` + events.length)])
+        // Create a new event, add it to our list, then open the edit menu for this event
+        // TODO: Event palette
+        let newEvent = new SessionEvent(`New Event`);
+        setEvents(arr => [...arr, newEvent])
+        navigation.navigate('EventEdit', {event: newEvent});
     };
 
     // Update screen when we regain focus to update event titles
@@ -27,16 +31,16 @@ export default function SessionTrackingScreen({navigation}: RootStackScreenProps
         });
     }, [navigation])
 
+    const renderItem = ({item}: { item: SessionEvent }) => <SessionEventListItem event={item} />;
+
     return (
         <View style={styles.container}>
-            <View style={styles.container}>
-                <Text style={styles.title}>Session Tracker</Text>
-            </View>
+            {/*<Text style={styles.title}>Session Tracker</Text>*/}
 
             {/*Display events*/}
-            {events.map((item, key)=>(
-                <SessionEventListItem key={key} event={item}/>
-            ))}
+            <SafeAreaView style={styles.eventContainer}>
+                <FlatList data={events} renderItem={renderItem} />
+            </SafeAreaView>
 
             <TouchableOpacity
                 style={styles.addEventButton}
@@ -54,11 +58,17 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
     },
+    eventContainer: {
+        flex: 1,
+        width: '100%',
+        marginBottom: 100,
+    },
     title: {
         fontSize: 20,
         fontWeight: 'bold',
     },
     addEventButton: {
+        flex: 1,
         position: 'absolute',
         width: 50,
         height: 50,
