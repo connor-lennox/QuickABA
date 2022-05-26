@@ -19,6 +19,7 @@ export type RootStackParamList = {
   SessionTracking: undefined;
   HistoryView: undefined,
   EventEdit: EditSessionEventScreenProps,
+  EditPalette: undefined,
   Modal: undefined;
   NotFound: undefined;
 };

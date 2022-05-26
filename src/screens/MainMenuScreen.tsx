@@ -22,7 +22,7 @@ export default function MainMenuScreen({ navigation }: RootTabScreenProps<'MainM
         <Text style={styles.title}>Session History</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => console.log("navigate to palette")} style={[styles.menuOption, styles.paletteButton, paletteButtonColor]}>
+      <TouchableOpacity onPress={() => navigation.navigate('EditPalette')} style={[styles.menuOption, styles.paletteButton, paletteButtonColor]}>
         <Text style={styles.title}>Event Palette</Text>
       </TouchableOpacity>
     </View>

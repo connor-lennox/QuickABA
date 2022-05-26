@@ -30,6 +30,7 @@ const linking: LinkingOptions<RootStackParamList> = {
       Modal: 'modal',
       SessionTracking: 'session',
       HistoryView: 'history',
+      EditPalette: 'palette',
       NotFound: '*',
     },
   },
