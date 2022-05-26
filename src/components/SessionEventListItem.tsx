@@ -1,5 +1,6 @@
 import {SessionEvent} from "../model/TrackedSession";
-import {TouchableOpacity, Text, StyleSheet} from "react-native";
+import {TouchableOpacity, StyleSheet} from "react-native";
+import {Text} from "./Themed"
 import {useNavigation} from "@react-navigation/native";
 
 interface SessionEventListItemProps {
@@ -16,8 +17,10 @@ export function SessionEventListItem(props: SessionEventListItemProps) {
     }
 
     return (
-        <TouchableOpacity onPress={() => openSessionEventEditor(props.event)}>
-            <Text style={{color: 'white'}}>
+        <TouchableOpacity
+            style={styles.container}
+            onPress={() => openSessionEventEditor(props.event)}>
+            <Text>
                 {props.event.title}
             </Text>
         </TouchableOpacity>
@@ -25,5 +28,12 @@ export function SessionEventListItem(props: SessionEventListItemProps) {
 }
 
 const styles = StyleSheet.create({
-
+    container: {
+        width: '90%',
+        borderWidth: 1,
+        borderRadius: 8,
+        borderStyle: "solid",
+        padding: 8,
+        margin: 4
+    }
 })
