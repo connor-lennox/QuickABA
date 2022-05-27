@@ -5,24 +5,37 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, {useState} from "react";
 import {EditPaletteListItem} from "../components/EditPaletteListItem";
 import colors from "../constants/Colors";
+import {PaletteItem} from "../model/PaletteItem";
 
 export default function EditPaletteScreen({navigation}: RootStackScreenProps<"EditPalette"> ) {
 
-    const [palette, setPalette] = useState(new Array<string>());
+    const [palette, setPalette] = useState(new Array<PaletteItem>());
 
+    // When the screen is opened, grab the palette from Storage and set state:
     React.useEffect(() => {
         AsyncStorage.getItem('@paletteKey')
         .then((v) => {
             console.log("loaded " + v)
-            setPalette(v != null ? JSON.parse(v) : new Array<string>());
+            setPalette(v != null ? JSON.parse(v) : new Array<PaletteItem>());
         })
     }, []);
 
-    const renderItem = ({item}: { item: string }) => <EditPaletteListItem title={item} />
+    // When the screen is closed, write the new palette to Storage:
+    React.useEffect(() => {
+        navigation.addListener('beforeRemove', () => {
+            savePalette()
+        })
+    })
+
+    const savePalette = () => {
+        AsyncStorage.setItem('@paletteKey', JSON.stringify(palette));
+    }
+
+    const renderItem = ({item}: { item: PaletteItem }) => <EditPaletteListItem item={item} />
 
     const onAddElementClick = () => {
-        setPalette(arr => [...arr, "test palette item " + palette.length]);
-        AsyncStorage.setItem('@paletteKey', JSON.stringify(palette));
+        let newPalette = [...palette, new PaletteItem("test palette item " + palette.length)];
+        setPalette(newPalette);
     };
 
     return (
