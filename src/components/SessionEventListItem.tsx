@@ -14,12 +14,19 @@ export function SessionEventListItem(props: SessionEventListItemProps) {
         navigation.navigate('EventEdit', {event: sessionEvent});
     }
 
+    const time = new Date(props.event.time);
+    const timeString = time.toLocaleTimeString(undefined, {hour12: true, timeZoneName: undefined});
+
     return (
         <TouchableOpacity
             style={styles.container}
             onPress={() => openSessionEventEditor(props.event)}>
-            <Text>
+            <Text style={{alignSelf: 'flex-start'}}>
                 {props.event.title}
+            </Text>
+
+            <Text style={{alignSelf: 'flex-end'}}>
+                {timeString}
             </Text>
         </TouchableOpacity>
     )
@@ -27,6 +34,9 @@ export function SessionEventListItem(props: SessionEventListItemProps) {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         width: '90%',
         borderWidth: 1,
         borderRadius: 8,
