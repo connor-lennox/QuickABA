@@ -34,7 +34,7 @@ export default function EditPaletteScreen({navigation}: RootStackScreenProps<"Ed
     const renderItem = ({item}: { item: PaletteItem }) => <EditPaletteListItem item={item} />
 
     const onAddElementClick = () => {
-        let newPalette = [...palette, new PaletteItem("test palette item " + palette.length)];
+        let newPalette = [...palette, new PaletteItem("New Palette Item")];
         setPalette(newPalette);
     };
 

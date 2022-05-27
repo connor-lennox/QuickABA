@@ -16,11 +16,12 @@ export default function SessionTrackingScreen({navigation}: RootStackScreenProps
     const [events, setEvents] = useState(new Array<SessionEvent>());
 
     const onAddEventClick = () => {
-        // Create a new event, add it to our list, then open the edit menu for this event
-        // TODO: Event palette
-        let newEvent = new SessionEvent(`New Event`);
-        setEvents(arr => [...arr, newEvent])
-        navigation.navigate('EventEdit', {event: newEvent});
+        // // Create a new event, add it to our list, then open the edit menu for this event
+        // // TODO: Event palette
+        // let newEvent = new SessionEvent(`New Event`);
+        // setEvents(arr => [...arr, newEvent])
+        // navigation.navigate('EventEdit', {event: newEvent});
+        navigation.navigate('NewEvent');
     };
 
     // Update screen when we regain focus to update event titles
@@ -55,6 +56,7 @@ export default function SessionTrackingScreen({navigation}: RootStackScreenProps
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        padding: 8,
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
     },

@@ -20,6 +20,7 @@ export type RootStackParamList = {
   HistoryView: undefined,
   EventEdit: EditSessionEventScreenProps,
   EditPalette: undefined,
+  NewEvent: undefined,
   Modal: undefined;
   NotFound: undefined;
 };
