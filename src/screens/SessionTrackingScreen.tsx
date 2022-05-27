@@ -3,8 +3,13 @@ import {Text, View} from "../components/Themed";
 import {FlatList, SafeAreaView, StyleSheet, TouchableOpacity} from "react-native";
 import colors from "../constants/Colors";
 import React, {useState} from "react";
-import {SessionEvent} from "../model/TrackedSession";
+import {SessionEvent, TrackedSession} from "../model/TrackedSession";
 import {SessionEventListItem} from "../components/SessionEventListItem";
+
+
+export interface SessionTrackingParams {
+    newEvent: string;
+}
 
 // Create a hook to force updates on functional components
 function useForceUpdate() {
@@ -12,16 +17,12 @@ function useForceUpdate() {
     return () => setValue(value => value + 1);
 }
 
-export default function SessionTrackingScreen({navigation}: RootStackScreenProps<'SessionTracking'>) {
-    const [events, setEvents] = useState(new Array<SessionEvent>());
+export default function SessionTrackingScreen({route, navigation}: RootStackScreenProps<'SessionTracking'>) {
+    const [session, setSession] = useState(new TrackedSession());
 
     const onAddEventClick = () => {
-        // // Create a new event, add it to our list, then open the edit menu for this event
-        // // TODO: Event palette
-        // let newEvent = new SessionEvent(`New Event`);
-        // setEvents(arr => [...arr, newEvent])
-        // navigation.navigate('EventEdit', {event: newEvent});
-        navigation.navigate('NewEvent');
+        // Navigate to the New Event Screen, providing a handle to the active Session
+        navigation.navigate('NewEvent', {session: session});
     };
 
     // Update screen when we regain focus to update event titles
@@ -40,7 +41,7 @@ export default function SessionTrackingScreen({navigation}: RootStackScreenProps
 
             {/*Display events*/}
             <SafeAreaView style={styles.eventContainer}>
-                <FlatList data={events} renderItem={renderItem} />
+                <FlatList data={session.events} renderItem={renderItem} />
             </SafeAreaView>
 
             <TouchableOpacity

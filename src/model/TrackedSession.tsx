@@ -4,6 +4,10 @@ export class TrackedSession {
 
     /** Events that make up the session */
     events: Array<SessionEvent> = [];
+
+    addEvent(event: SessionEvent): void {
+        this.events = [...this.events, event];
+    }
 }
 
 export class SessionEvent {
