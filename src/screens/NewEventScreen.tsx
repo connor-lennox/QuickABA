@@ -3,7 +3,7 @@ import {Text, TextInput, View} from "../components/Themed";
 import React, {useState} from "react";
 import {PaletteItem} from "../model/PaletteItem";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {FlatList, TouchableOpacity} from "react-native";
+import {FlatList, SafeAreaView, StyleSheet, TouchableOpacity} from "react-native";
 import {SessionEvent, TrackedSession} from "../model/TrackedSession";
 
 export interface NewEventScreenParams {
@@ -43,18 +43,34 @@ export default function NewEventScreen({route, navigation}: RootStackScreenProps
     }
 
     const renderPaletteItem = ({item}: {item: PaletteItem}) =>
-        <TouchableOpacity onPress={() => selectPaletteItem(item.title)}>
+        <TouchableOpacity style={styles.paletteItemContainer} onPress={() => selectPaletteItem(item.title)}>
             <Text>{item.title}</Text>
         </TouchableOpacity>
 
     return (
-        <View>
-            <Text>New Event</Text>
+        <View style={styles.container}>
             <TextInput
-                onChangeText={(newText) => setNewEventName(newText)}/>
-            <View>
+                onChangeText={(newText) => setNewEventName(newText)}
+                placeholder={"Title"}
+                style={{borderBottomWidth: 1}}/>
+            <SafeAreaView>
                 <FlatList data={palette} renderItem={renderPaletteItem} />
-            </View>
+            </SafeAreaView>
         </View>
     )
 }
+
+
+const styles = StyleSheet.create({
+    container: {
+        padding: 8,
+    },
+    paletteItemContainer: {
+        width: '90%',
+        borderWidth: 1,
+        borderRadius: 8,
+        borderStyle: "solid",
+        padding: 8,
+        margin: 4
+    }
+})
