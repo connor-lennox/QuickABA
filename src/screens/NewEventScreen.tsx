@@ -3,7 +3,7 @@ import {Text, TextInput, View} from "../components/Themed";
 import React, {useState} from "react";
 import {PaletteItem} from "../model/PaletteItem";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {FlatList} from "react-native";
+import {FlatList, TouchableOpacity} from "react-native";
 import {SessionEvent, TrackedSession} from "../model/TrackedSession";
 
 export interface NewEventScreenParams {
@@ -24,17 +24,28 @@ export default function NewEventScreen({route, navigation}: RootStackScreenProps
             })
     }, []);
 
+    const addNewEventIfPresent = () => {
+        if (newEventName.trim().length > 0) {
+            session.addEvent(new SessionEvent(newEventName));
+        }
+    }
+
     // On screen close, create the new event and add it to the array
     React.useEffect(() => {
-        return navigation.addListener('beforeRemove', () => {
-            if (newEventName.trim().length > 0) {
-                session.addEvent(new SessionEvent(newEventName));
-                console.log(session.events);
-            }
-        });
+        return navigation.addListener('beforeRemove', addNewEventIfPresent);
     });
 
-    const renderPaletteItem = ({item}: {item: PaletteItem}) => <Text>{item.title}</Text>
+    // Selecting a palette item fills the field automatically and then triggers a goBack, confirming the entry
+    const selectPaletteItem = (item: string) => {
+        session.addEvent(new SessionEvent(item));
+        navigation.removeListener('beforeRemove', addNewEventIfPresent);
+        navigation.goBack();
+    }
+
+    const renderPaletteItem = ({item}: {item: PaletteItem}) =>
+        <TouchableOpacity onPress={() => selectPaletteItem(item.title)}>
+            <Text>{item.title}</Text>
+        </TouchableOpacity>
 
     return (
         <View>
