@@ -1,10 +1,15 @@
 import {RootStackScreenProps} from "../../types";
 import {Text, View} from "../components/Themed";
-import {FlatList, SafeAreaView, StyleSheet, TouchableOpacity} from "react-native";
+import {FlatList, Pressable, SafeAreaView, StyleSheet, TouchableOpacity} from "react-native";
 import colors from "../constants/Colors";
 import React, {useState} from "react";
 import {SessionEvent, TrackedSession} from "../model/TrackedSession";
 import {SessionEventListItem} from "../components/SessionEventListItem";
+import {FontAwesome} from "@expo/vector-icons";
+import Colors from "../constants/Colors";
+import useColorScheme from "../hooks/useColorScheme";
+import prompt from 'react-native-prompt-android';
+import {saveSession} from "../util/SessionStorage";
 
 
 export interface SessionTrackingParams {
@@ -25,6 +30,26 @@ export default function SessionTrackingScreen({route, navigation}: RootStackScre
         navigation.navigate('NewEvent', {session: session});
     };
 
+    const saveAndExit = (title: string) => {
+        session.title = title;
+        saveSession(session).then(() => navigation.goBack());
+    }
+
+    const onSaveSessionClick = () => {
+        prompt(
+            'Save Session',
+            'Enter a title for this session:',
+            [
+                {text: 'Cancel', style: 'cancel'},
+                {text: 'Save', onPress: message => saveAndExit(message)}
+            ],
+            {
+                type: 'default',
+                cancelable: true,
+            }
+        )
+    }
+
     // Update screen when we regain focus to update event titles
     const forceUpdate = useForceUpdate();
     React.useEffect(() => {
@@ -32,6 +57,23 @@ export default function SessionTrackingScreen({route, navigation}: RootStackScre
             forceUpdate();
         });
     }, [navigation])
+
+    // Add "Save Session" button to headerRight
+    const colorScheme = useColorScheme();
+
+    React.useEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
+                <Pressable
+                    onPress={onSaveSessionClick}
+                    style={({pressed}) => ({
+                        opacity: pressed ? 0.5 : 1,
+                    })}>
+                    <FontAwesome name="check" size={24} color={Colors[colorScheme].text} style={{marginRight: 15}}/>
+                </Pressable>
+            )
+        });
+    }, [navigation]);
 
     const renderItem = ({item}: { item: SessionEvent }) => <SessionEventListItem event={item} />;
 

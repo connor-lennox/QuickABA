@@ -41,25 +41,11 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  const colorScheme = useColorScheme();
-
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name="Root" component={MainMenuScreen} options={{ title: 'QuickABA' }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Screen name="SessionTracking" component={SessionTrackingScreen}
-                    options={{
-                        title: "Session Tracking",
-                        headerRight: () => (
-                            <Pressable
-                                onPress={() => console.log('Save Session')}
-                                style={({ pressed }) => ({
-                                opacity: pressed ? 0.5 : 1,
-                            })}>
-                                <FontAwesome name="check" size={24} color={Colors[colorScheme].text} style={{ marginRight: 15 }} />
-                            </Pressable>
-                        )
-      }} />
+      <Stack.Screen name="SessionTracking" component={SessionTrackingScreen} options={{title: "Session Tracking"}} />
       <Stack.Screen name="HistoryView" component={HistoryViewScreen} options={{title: "History"}} />
       <Stack.Screen name="EventEdit" component={EditSessionEventScreen} options={{title: "Edit Event"}} />
       <Stack.Screen name="EditPalette" component={EditPaletteScreen} options={{title: "Edit Palette"}} />
