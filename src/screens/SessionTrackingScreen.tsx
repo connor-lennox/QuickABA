@@ -8,8 +8,12 @@ import {SessionEventListItem} from "../components/SessionEventListItem";
 import {FontAwesome} from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-import prompt from 'react-native-prompt-android';
-import {saveSession} from "../util/SessionStorage";
+import {saveSession, getSessions} from "../util/SessionStorage";
+import DialogContainer from "react-native-dialog/lib/Container";
+import DialogTitle from "react-native-dialog/lib/Title";
+import DialogDescription from "react-native-dialog/lib/Description";
+import DialogButton from "react-native-dialog/lib/Button";
+import DialogInput from "react-native-dialog/lib/Input";
 
 
 export interface SessionTrackingParams {
@@ -24,30 +28,21 @@ function useForceUpdate() {
 
 export default function SessionTrackingScreen({route, navigation}: RootStackScreenProps<'SessionTracking'>) {
     const [session, setSession] = useState(new TrackedSession());
+    const [dialogVisible, setDialogVisible] = useState(false);
+    const [saveName, setSaveName] = useState(``);
 
     const onAddEventClick = () => {
         // Navigate to the New Event Screen, providing a handle to the active Session
         navigation.navigate('NewEvent', {session: session});
     };
 
-    const saveAndExit = (title: string) => {
-        session.title = title;
+    const saveAndExit = () => {
+        session.title = saveName;
         saveSession(session).then(() => navigation.goBack());
     }
 
-    const onSaveSessionClick = () => {
-        prompt(
-            'Save Session',
-            'Enter a title for this session:',
-            [
-                {text: 'Cancel', style: 'cancel'},
-                {text: 'Save', onPress: message => saveAndExit(message)}
-            ],
-            {
-                type: 'default',
-                cancelable: true,
-            }
-        )
+    const cancelSave = () => {
+        setDialogVisible(false);
     }
 
     // Update screen when we regain focus to update event titles
@@ -65,7 +60,7 @@ export default function SessionTrackingScreen({route, navigation}: RootStackScre
         navigation.setOptions({
             headerRight: () => (
                 <Pressable
-                    onPress={onSaveSessionClick}
+                    onPress={() => setDialogVisible(true)}
                     style={({pressed}) => ({
                         opacity: pressed ? 0.5 : 1,
                     })}>
@@ -79,7 +74,14 @@ export default function SessionTrackingScreen({route, navigation}: RootStackScre
 
     return (
         <View style={styles.container}>
-            {/*<Text style={styles.title}>Session Tracker</Text>*/}
+            {/*Confirmation Dialogue*/}
+            <DialogContainer visible={dialogVisible}>
+                <DialogTitle>Save Session</DialogTitle>
+                <DialogDescription>Enter a title for this session:</DialogDescription>
+                <DialogInput placeholder={"Title"} onChangeText={(newText) => setSaveName(newText)} />
+                <DialogButton label="Cancel" onPress={cancelSave} />
+                <DialogButton label="Save" onPress={saveAndExit} />
+            </DialogContainer>
 
             {/*Display events*/}
             <SafeAreaView style={styles.eventContainer}>
