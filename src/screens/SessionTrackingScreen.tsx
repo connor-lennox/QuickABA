@@ -4,7 +4,7 @@ import {FlatList, Pressable, SafeAreaView, StyleSheet, TouchableOpacity} from "r
 import colors from "../constants/Colors";
 import React, {useState} from "react";
 import {SessionEvent, TrackedSession} from "../model/TrackedSession";
-import {SessionEventListItem} from "../components/SessionEventListItem";
+import {EditableSessionEventListItem} from "../components/SessionEventListItem";
 import {FontAwesome} from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
@@ -70,7 +70,7 @@ export default function SessionTrackingScreen({route, navigation}: RootStackScre
         });
     }, [navigation]);
 
-    const renderItem = ({item}: { item: SessionEvent }) => <SessionEventListItem event={item} />;
+    const renderItem = ({item}: { item: SessionEvent }) => <EditableSessionEventListItem event={item} />;
 
     return (
         <View style={styles.container}>

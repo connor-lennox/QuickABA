@@ -23,6 +23,8 @@ import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../../
 import LinkingConfiguration from './LinkingConfiguration';
 import EditPaletteScreen from "../screens/EditPaletteScreen";
 import NewEventScreen from "../screens/NewEventScreen";
+import ViewSessionEventScreen from "../screens/ViewSessionEventScreen";
+import ViewSessionScreen from "../screens/ViewSessionScreen";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -48,6 +50,8 @@ function RootNavigator() {
       <Stack.Screen name="SessionTracking" component={SessionTrackingScreen} options={{title: "Session Tracking"}} />
       <Stack.Screen name="HistoryView" component={HistoryViewScreen} options={{title: "History"}} />
       <Stack.Screen name="EventEdit" component={EditSessionEventScreen} options={{title: "Edit Event"}} />
+      <Stack.Screen name="EventView" component={ViewSessionEventScreen} options={{title: "View Event"}} />
+      <Stack.Screen name="SessionView" component={ViewSessionScreen} />
       <Stack.Screen name="EditPalette" component={EditPaletteScreen} options={{title: "Edit Palette"}} />
       <Stack.Screen name="NewEvent" component={NewEventScreen} options={{title: "New Event"}} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>

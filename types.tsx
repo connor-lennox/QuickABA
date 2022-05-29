@@ -9,6 +9,8 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {EditSessionEventScreenProps} from "./src/screens/EditSessionEventScreen";
 import {SessionTrackingParams} from "./src/screens/SessionTrackingScreen";
 import {NewEventScreenParams} from "./src/screens/NewEventScreen";
+import {ViewSessionEventScreenProps} from "./src/screens/ViewSessionEventScreen";
+import {ViewSessionScreenProps} from "./src/screens/ViewSessionScreen";
 
 declare global {
   namespace ReactNavigation {
@@ -21,6 +23,8 @@ export type RootStackParamList = {
   SessionTracking: SessionTrackingParams | undefined;
   HistoryView: undefined,
   EventEdit: EditSessionEventScreenProps,
+  EventView: ViewSessionEventScreenProps,
+  SessionView: ViewSessionScreenProps,
   EditPalette: undefined,
   NewEvent: NewEventScreenParams,
   Modal: undefined;

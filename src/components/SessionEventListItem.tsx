@@ -7,20 +7,14 @@ interface SessionEventListItemProps {
     event: SessionEvent;
 }
 
-export function SessionEventListItem(props: SessionEventListItemProps) {
-    const navigation = useNavigation();
-
-    const openSessionEventEditor = (sessionEvent: SessionEvent) => {
-        navigation.navigate('EventEdit', {event: sessionEvent});
-    }
-
+const SessionEventListItem = (props: SessionEventListItemProps, onClick: (sessionEvent: SessionEvent) => void) => {
     const time = new Date(props.event.time);
     const timeString = time.toLocaleTimeString(undefined, {hour12: true, timeZoneName: undefined});
 
     return (
         <TouchableOpacity
             style={styles.container}
-            onPress={() => openSessionEventEditor(props.event)}>
+            onPress={() => onClick(props.event)}>
             <Text style={{alignSelf: 'flex-start'}}>
                 {props.event.title}
             </Text>
@@ -30,6 +24,26 @@ export function SessionEventListItem(props: SessionEventListItemProps) {
             </Text>
         </TouchableOpacity>
     )
+}
+
+export const EditableSessionEventListItem = (props: SessionEventListItemProps) => {
+    const navigation = useNavigation();
+
+    const openSessionEventEditor = (sessionEvent: SessionEvent) => {
+        navigation.navigate('EventEdit', {event: sessionEvent});
+    }
+
+    return SessionEventListItem(props, openSessionEventEditor);
+}
+
+export const ViewOnlySessionEventListItem = (props: SessionEventListItemProps) => {
+    const navigation = useNavigation();
+
+    const openSessionEventViewer = (sessionEvent: SessionEvent) => {
+        navigation.navigate('EventView', {event: sessionEvent});
+    }
+
+    return SessionEventListItem(props, openSessionEventViewer);
 }
 
 const styles = StyleSheet.create({
